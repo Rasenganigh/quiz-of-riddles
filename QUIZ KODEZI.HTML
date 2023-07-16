@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <marquee bgcolor="black" direction="left" scrollamount="10" width="100%" height="20">
+                      <font style="font size="60px" "font color="white">Are you ready! Think Sharp and choose the answer</font>
+           </marquee>
+  <body bgcolor="red">
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    #quiz {
+      width: 600px;
+      margin: 0 auto;
+    }
+    #question {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    #answers {
+      list-style-type: none;
+      padding: 0;
+    }
+    #answers li {
+      padding: 10px;
+      border: 1px solid ;
+      margin-bottom: 5px;
+    }
+    #answers li:hover {
+      background-color:  gray;
+    }
+    #score {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz">
+    <h1>Quiz</h1>
+    <div id="question"></div>
+    <ul id="answers"></ul>
+    <div id="score"></div>
+  </div>
+  <script>
+    // Questions
+    const questions = [
+      {
+        question: "What has to be broken before you can use it?",
+        answers: {
+          a: "egg",
+          b: "stick",
+          c: "brain"
+        },
+        correctAnswer: "a"
+      },
+      {
+        question: "Im tall when Im young, and Im short when Im old. What am I?",
+        answers: {
+          a: "Man",
+          b: "animal",
+          c: "Candle"
+        },
+        correctAnswer: "c"
+      },
+      {
+        question: "What month of the year has 28 days?",
+        answers: {
+          a: "february",
+          b: "all of them",
+          c: "none"
+        },
+        correctAnswer: "b"
+      },
+      {
+        question: "how much u rate?",
+        answers: {
+          a: "1/10",
+          b: "9/10",
+          c: "10/10"
+        },
+        correctAnswer: "b"
+      },
+    ];
+
+    // Variables
+    const quizContainer = document.getElementById("quiz");
+    const questionElement = document.getElementById("question");
+    const answersElement = document.getElementById("answers");
+    const scoreElement = document.getElementById("score");
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Functions
+    function showQuestion() {
+      const question = questions[currentQuestion];
+      questionElement.innerText = question.question;
+      answersElement.innerHTML = "";
+      for (const key in question.answers) {
+        const answer = question.answers[key];
+        answersElement.innerHTML += `
+          <li>
+            <input type="radio" name="answer" value="${key}">
+            ${answer}
+          </li>
+        `;
+      }
+    }
+
+    function handleAnswer() {
+      const answer = document.querySelector("input[name=answer]:checked").value;
+      if (answer === questions[currentQuestion].correctAnswer) {
+        score++;
+      }
+      currentQuestion++;
+      if (currentQuestion === questions.length) {
+        showScore();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function showScore() {
+      quizContainer.innerHTML = `
+        <h2>You got ${score}/${questions.length} questions correct!</h2>
+      `;
+    }
+
+    // Event Listeners
+    document.addEventListener("DOMContentLoaded", showQuestion);
+    answersElement.addEventListener("change", handleAnswer);
+  </script>
+  <br><br>
+</body>
+</html>
